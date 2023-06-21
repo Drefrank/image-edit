@@ -1,0 +1,24 @@
+from PIL import Image
+
+def edit_image_color(image_path, output_path, red_scale, green_scale, blue_scale):
+    # Open the image
+    image = Image.open(image_path)
+
+    # Split the image into red, green, and blue channels
+    red, green, blue = image.split()
+
+    # Apply the color scales to each channel
+    red = red.point(lambda x: x * red_scale)
+    green = green.point(lambda x: x * green_scale)
+    blue = blue.point(lambda x: x * blue_scale)
+
+    # Merge the modified channels back into an image
+    edited_image = Image.merge("RGB", (red, green, blue))
+
+    # Save the edited image as a PNG file
+    edited_image.save(output_path, "PNG")
+
+    print("Image color edited and saved successfully.")
+
+Example usage
+edit_image_color("input_image.jpg", "output_image.png", 1.5, 0.8, 0.2)
